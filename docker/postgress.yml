@@ -1,0 +1,12 @@
+#ONLY FOR LOCAL DEVELOPMENT
+version: '3'
+services:
+  feedback-db:
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=feedback
+      - POSTGRES_PASSWORD=feedback
+      - POSTGRES_DB=feedback
+    ports:
+      - 5432:5432
+    command: postgres -c listen_addresses=* -c log_statement=all -c log_connections=on -c log_disconnections=on -c log_line_prefix="%t [%c] %u "
