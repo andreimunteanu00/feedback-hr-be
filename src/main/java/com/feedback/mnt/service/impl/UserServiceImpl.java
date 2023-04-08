@@ -1,5 +1,8 @@
 package com.feedback.mnt.service.impl;
 
+import com.feedback.mnt.dto.mapper.UserMapper;
+import com.feedback.mnt.dto.user.UserShowDTO;
+import com.feedback.mnt.dto.user.UserUpdateDTO;
 import com.feedback.mnt.entity.User;
 import com.feedback.mnt.repository.UserRepository;
 import com.feedback.mnt.service.UserService;
@@ -8,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
+import java.util.Objects;
 
 @Service
 @AllArgsConstructor
@@ -15,6 +19,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserMapper userMapper;
 
     @Override
     public void createUser(String email) {
@@ -26,6 +31,21 @@ public class UserServiceImpl implements UserService {
         user.setResetPassword(true);
         //TODO send email with credentials + link to login in fe
         userRepository.save(user);
+    }
+
+    @Override
+    public UserShowDTO getUserByEmail(String email) {
+        return userMapper.toUserShowDTO(Objects.requireNonNull(userRepository.findByEmail(email).orElse(null)));
+    }
+
+    @Override
+    public void update(UserUpdateDTO userUpdateDTO) {
+        // TODO
+    }
+
+    @Override
+    public void deactivate(String email) {
+        userRepository.deactivate(email);
     }
 
     private static String generateRandomPassword() {

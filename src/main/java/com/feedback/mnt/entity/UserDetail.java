@@ -28,7 +28,7 @@ public class UserDetail implements Serializable {
     private byte[] profilePicture;
 
     @OneToMany(mappedBy = "userDetail")
-    private List<Department> department;
+    private List<Department> departments;
 
     @OneToOne
     @JoinColumn(name = "USER_ID")
