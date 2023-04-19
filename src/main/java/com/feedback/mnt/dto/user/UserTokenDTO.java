@@ -11,5 +11,6 @@ import java.util.Set;
 public class UserTokenDTO {
 
     private String email;
+    private Boolean resetPassword;
     private Set<RoleDTO> roleSet;
 }

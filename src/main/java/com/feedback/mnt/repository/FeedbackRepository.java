@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FeedbackRepository extends JpaRepository<Feedback, Long> {
 
-    @Query("SELECT f FROM Feedback f WHERE f.user IS NOT NULL AND f.user.email = :email ORDER BY f.createdTimeStamp DESC")
+    @Query("SELECT f FROM Feedback f WHERE f.user.email LIKE :email ORDER BY f.createdTimeStamp DESC")
     Page<Feedback> findAllByUserEmail(@Param("email") String email, Pageable page);
 
 }

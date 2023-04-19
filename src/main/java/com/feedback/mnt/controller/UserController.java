@@ -4,6 +4,7 @@ import com.feedback.mnt.dto.user.UserShowDTO;
 import com.feedback.mnt.dto.user.UserUpdateDTO;
 import com.feedback.mnt.service.UserService;
 import com.feedback.mnt.util.Util;
+import com.feedback.mnt.util.exception.UserNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,6 +32,12 @@ public class UserController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     ResponseEntity<Void> createUser(@PathVariable String email) {
         userService.createUser(email);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("reset-password")
+    ResponseEntity<Void> resetPassword(@RequestBody UserUpdateDTO userUpdateDTO) throws UserNotFoundException {
+        userService.resetPassword(userUpdateDTO);
         return ResponseEntity.noContent().build();
     }
 

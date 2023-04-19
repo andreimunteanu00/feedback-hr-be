@@ -8,7 +8,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class UserUpdateDTO {
 
-    private String oldPassword;
     private String password;
     private UserDetailDTO userDetailDTO;
 

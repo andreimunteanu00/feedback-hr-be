@@ -2,6 +2,7 @@ package com.feedback.mnt.controller;
 
 import com.feedback.mnt.dto.feedback.FeedbackDTO;
 import com.feedback.mnt.dto.feedback.FeedbackListDTO;
+import com.feedback.mnt.dto.feedback.FeedbackShowDTO;
 import com.feedback.mnt.service.FeedbackService;
 import com.feedback.mnt.util.Util;
 import lombok.AllArgsConstructor;
@@ -14,14 +15,20 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/feedback")
 @AllArgsConstructor
+@PreAuthorize("hasRole('ROLE_EMPLOYEE')")
 public class FeedbackController {
 
     private final FeedbackService feedbackService;
 
     @GetMapping("current-user")
-    ResponseEntity<Page<FeedbackListDTO>> getAllFeedbackOfCurrentUser(@RequestParam(name = "page", defaultValue = "0") int page,
+    ResponseEntity<Page<FeedbackListDTO>> getAllFeedbacksOfCurrentUser(@RequestParam(name = "page", defaultValue = "0") int page,
                                                                       @RequestParam(name = "size", defaultValue = "10") int size) {
         return ResponseEntity.ok(feedbackService.getAllFeedback(Util.getEmailCurrentUser(), PageRequest.of(page, size)));
+    }
+
+    @GetMapping("{id}")
+    ResponseEntity<FeedbackShowDTO> getFeedbackById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(feedbackService.getFeedbackById(id));
     }
 
     @GetMapping

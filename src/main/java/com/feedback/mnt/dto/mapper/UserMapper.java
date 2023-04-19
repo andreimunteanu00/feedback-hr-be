@@ -26,6 +26,7 @@ public class UserMapper {
     public UserTokenDTO toUserTokenDTO(User user) {
         return new UserTokenDTO(
                 user.getEmail(),
+                user.getResetPassword(),
                 roleMapper.toRoleDTOSet(user.getRoles())
         );
     }
@@ -39,7 +40,6 @@ public class UserMapper {
 
     public UserUpdateDTO toUserUpdateDTO(User user) {
         return new UserUpdateDTO(
-                null,
                 user.getPassword(),
                 userDetailMapper.toUserDetailDTO(user.getUserDetail())
         );
