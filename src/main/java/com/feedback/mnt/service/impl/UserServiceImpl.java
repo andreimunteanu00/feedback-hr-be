@@ -15,6 +15,7 @@ import com.feedback.mnt.util.message.Message;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.SecureRandom;
 import java.util.Objects;
@@ -59,6 +60,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void resetPassword(UserUpdateDTO userUpdateDTO) throws UserNotFoundException {
         User user = userRepository.findByEmail(Util.getEmailCurrentUser()).orElse(null);
         if (user == null) throw new UserNotFoundException(Message.USER_NOT_FOUND);
